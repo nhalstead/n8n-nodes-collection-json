@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-collection-json",
+  "name": "@nhalstead/n8n-nodes-collection-json",
   "version": "0.1.0",
   "description": "Convert Collection+JSON data to plain JSON Objects",
   "keywords": [
@@ -7,10 +7,7 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/nhalstead",
-  "author": {
-    "name": "Noah Halstead",
-    "email": "nhalstead00@gmail.com"
-  },
+  "author": "Noah Halstead <nhalstead00@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nhalstead/n8n-nodes-collection-json.git"
@@ -54,5 +51,8 @@
   },
   "resolutions": {
     "eslint-plugin-jsdoc": ">=22.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/nhalstead/n8n-nodes-collection-json/issues"
   }
 }
