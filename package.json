@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-collection-json",
   "version": "0.1.0",
-  "description": "",
+  "description": "Convert Collection+JSON data to plain JSON Objects",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/nhalstead",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Noah Halstead",
+    "email": "nhalstead00@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "git+https://github.com/nhalstead/n8n-nodes-collection-json.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -22,7 +22,6 @@
   "packageManager": "pnpm@9.1.4",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
@@ -36,23 +35,24 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+      "dist/credentials/ConvertCollectionApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/ConvertCollection/ConvertCollectionJson.node.js"
     ]
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^8.56.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.1",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "prettier": "^3.3.2",
     "typescript": "^5.5.3"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
+  },
+  "resolutions": {
+    "eslint-plugin-jsdoc": ">=22.1.0"
   }
 }
