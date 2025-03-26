@@ -33,3 +33,6 @@ Tested against v1.83.2
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+* Collection+JSON Standard (`application/vnd.collection+json`):
+  * https://github.com/collection-json/spec
+  * http://amundsen.com/media-types/collection/

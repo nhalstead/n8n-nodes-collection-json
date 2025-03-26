@@ -4,45 +4,11 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-
-/**
- * Taken from the SPEC on github
- * @link https://github.com/collection-json/spec
- */
-interface CollectionJsonRoot {
-	version: string | null
-	href: string | null,
-	ref: string | null,
-	links: object[] | null,
-	queries: object[] | null,
-	template: object[] | null,
-	items: CollectionJsonItem[] | null
-}
-
-interface CollectionJsonItem {
-	href: string,
-	data: CollectionJsonData[],
-	links: CollectionJsonLink[]
-}
-
-type KvAny = { [key: string]: any };
-
-type Mixed = string | number | boolean | null;
-
-interface CollectionJsonData {
-	name: string | null,
-	value: Mixed,
-	prompt: string | null
-}
-
-interface CollectionJsonLink {
-	href: string,
-	rel: string,
-	name: string | null,
-	render: string | null,
-	prompt: string | null
-}
-
+import {
+	CollectionJsonData,
+	CollectionJsonWithPage,
+	KvAny,
+}	from './collection';
 
 export class ConvertCollectionJson implements INodeType {
 	description: INodeTypeDescription = {
@@ -87,21 +53,23 @@ export class ConvertCollectionJson implements INodeType {
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			item = items[itemIndex];
 
-			if (! item.json?.collection) {
+			if (!item.json?.collection) {
 				item.json = {
-					items: []
+					items: [],
+					page_info: null,
+					links: []
 				}
 				continue;
 			}
 
-			const collection: CollectionJsonRoot = item.json.collection as unknown as CollectionJsonRoot;
-
+			const collection: CollectionJsonWithPage = item.json.collection as CollectionJsonWithPage;
 			const entries: CollectionJsonData[][] = collection.items?.map(collect => collect.data) || [];
 
-			item.json = Object.assign({}, {
-				items: ConvertCollectionJson.convert(entries)
-			})
-
+			item.json = {
+				items: ConvertCollectionJson.convert(entries),
+				page_info: collection.page_info || null,
+				links: collection.links || []
+			};
 		}
 
 		return [items];

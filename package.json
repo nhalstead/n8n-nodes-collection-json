@@ -1,6 +1,6 @@
 {
   "name": "@nhalstead/n8n-nodes-collection-json",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert Collection+JSON data to plain JSON Objects",
   "keywords": [
     "n8n-community-node-package"
