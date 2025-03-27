@@ -31,18 +31,23 @@ export class ConvertCollectionJson implements INodeType {
 	/**
 	 * Convert Collection+JSON format to a standard JSON Object
 	 */
-	static convert(entries: CollectionJsonData[][]): object {
-		return entries.map(input => {
-			return input
-				.reduce((acc: KvAny, {name, value}: CollectionJsonData) => {
-					if (!name) {
-						return acc;
-					}
+	static convertAll(entries: CollectionJsonData[][]): object {
+		return entries.map(ConvertCollectionJson.convert);
+	}
 
-					acc[name] = value;
+	/**
+	 * Convert Collection+JSON format to a standard JSON Object
+	 */
+	static convert(input: CollectionJsonData[]): object {
+		return input
+			.reduce((acc: KvAny, {name, value}: CollectionJsonData) => {
+				if (!name) {
 					return acc;
-				}, {});
-		});
+				}
+
+				acc[name] = value;
+				return acc;
+			}, {});
 	}
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -66,7 +71,7 @@ export class ConvertCollectionJson implements INodeType {
 			const entries: CollectionJsonData[][] = collection.items?.map(collect => collect.data) || [];
 
 			item.json = {
-				items: ConvertCollectionJson.convert(entries),
+				items: ConvertCollectionJson.convertAll(entries),
 				page_info: collection.page_info || null,
 				links: collection.links || []
 			};
