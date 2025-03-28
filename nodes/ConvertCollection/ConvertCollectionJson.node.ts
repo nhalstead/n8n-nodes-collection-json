@@ -5,10 +5,10 @@ import type {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import {
-	CollectionJsonData,
+	CollectionJsonData, CollectionJsonItem,
 	CollectionJsonWithPage,
 	KvAny,
-}	from './collection';
+} from './collection';
 
 export class ConvertCollectionJson implements INodeType {
 	description: INodeTypeDescription = {
@@ -32,13 +32,13 @@ export class ConvertCollectionJson implements INodeType {
 	 * Convert Collection+JSON format to a standard JSON Object
 	 */
 	static convertAll(entries: CollectionJsonData[][]): object {
-		return entries.map(ConvertCollectionJson.convert);
+		return entries.map(ConvertCollectionJson.collectionToObject);
 	}
 
 	/**
 	 * Convert Collection+JSON format to a standard JSON Object
 	 */
-	static convert(input: CollectionJsonData[]): object {
+	static collectionToObject(input: CollectionJsonData[]): object {
 		return input
 			.reduce((acc: KvAny, {name, value}: CollectionJsonData) => {
 				if (!name) {
@@ -48,6 +48,13 @@ export class ConvertCollectionJson implements INodeType {
 				acc[name] = value;
 				return acc;
 			}, {});
+	}
+
+	static collectionToObjectWithOther(input: CollectionJsonItem): object {
+		const obj = ConvertCollectionJson.collectionToObject(input.data) as KvAny;
+		obj['_href'] = input.href;
+		obj['_links'] = input.links;
+		return obj;
 	}
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -68,10 +75,10 @@ export class ConvertCollectionJson implements INodeType {
 			}
 
 			const collection: CollectionJsonWithPage = item.json.collection as CollectionJsonWithPage;
-			const entries: CollectionJsonData[][] = collection.items?.map(collect => collect.data) || [];
+			const entries: object[] = collection.items?.map(ConvertCollectionJson.collectionToObjectWithOther) || [];
 
 			item.json = {
-				items: ConvertCollectionJson.convertAll(entries),
+				items: entries,
 				page_info: collection.page_info || null,
 				links: collection.links || []
 			};
