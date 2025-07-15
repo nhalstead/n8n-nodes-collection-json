@@ -19,7 +19,6 @@
     "node": ">=18.10",
     "pnpm": ">=9.1"
   },
-  "packageManager": "pnpm@9.1.4",
   "main": "index.js",
   "scripts": {
     "build": "tsc && gulp build:icons",
@@ -34,9 +33,7 @@
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/ConvertCollectionApi.credentials.js"
-    ],
+    "credentials": [],
     "nodes": [
       "dist/nodes/ConvertCollection/ConvertCollectionJson.node.js"
     ]
