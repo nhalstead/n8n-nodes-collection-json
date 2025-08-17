@@ -19,6 +19,7 @@
     "node": ">=18.10",
     "pnpm": ">=9.1"
   },
+  "packageManager": "pnpm@10.14.0",
   "main": "index.js",
   "scripts": {
     "build": "tsc && gulp build:icons",
