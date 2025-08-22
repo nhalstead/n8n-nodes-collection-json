@@ -81,6 +81,7 @@ export class ConvertCollectionJson implements INodeType {
 				const expandedItems = item.json.items.map((entry: any) => {
 					return {
 						json: entry,
+						pairedItem: item.pairedItem,
 					} as INodeExecutionData
 				});
 				acc.push(...expandedItems);
